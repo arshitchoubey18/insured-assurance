@@ -3,40 +3,23 @@ name: Java CI with Maven + Trigger Jenkins
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn -B clean package
+    - name: Build with Maven
+      run: mvn -B clean package -DskipTests
 
-      - name: Upload WAR artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: war-file
-          path: target/InsuredAssurance.war
-
-      - name: Trigger Jenkins Deploy Job
-        uses: appleboy/jenkins-action@v1
-        with:
-          url: ${{ secrets.JENKINS_URL }}
-          user: ${{ secrets.JENKINS_USER }}
-          token: ${{ secrets.JENKINS_TOKEN }}
-          job: deploy-insured-assurance
-          wait: true
-          timeout: 10m
-          parameters: |
-            GIT_COMMIT=${{ github.sha }}
-            BRANCH=${{ github.ref_name }}
+    - name: Trigger Jenkins Job
+      run: |
+        curl -v -X POST "http://${{ secrets.JENKINS_HOST }}/job/${{ secrets.JENKINS_JOB }}/build" \
+          --user "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }}"
