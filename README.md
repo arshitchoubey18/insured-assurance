@@ -152,40 +152,8 @@ sudo systemctl restart tomcat
 
 All screenshots are stored in the `screenshots/` folder and demonstrate the full CI/CD workflow.
 
----
 
-### 🚀 GitHub Actions Pipeline
-![GitHub Actions](screenshots/Screenshot%202026-05-24%20024618.png)
 
----
-
-### ⚙️ Jenkins Deployment Job
-![Jenkins](screenshots/Screenshot%202026-05-24%20024632.png)
-
----
-
-### 🔄 Build & Packaging Stage
-![Build](screenshots/Screenshot%202026-05-24%20024702.png)
-
----
-
-### ☁️ EC2 Deployment via SSH
-![EC2 Deploy](screenshots/Screenshot%202026-05-24%20024715.png)
-
----
-
-### 🌐 Tomcat Running Status
-![Tomcat](screenshots/Screenshot%202026-05-24%20024739.png)
-
----
-
-### 🖥️ Application Running
-![App](screenshots/Screenshot%202026-05-24%20024800.png)
-
----
-
-### ✅ Final Output Verification
-![Final Output](screenshots/Screenshot%202026-05-24%20024819.png)
 
 ---
 
