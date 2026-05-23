@@ -19,7 +19,17 @@ jobs:
     - name: Build with Maven
       run: mvn -B clean package -DskipTests
 
+    - name: Copy WAR to EC2 via SCP
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        source: "target/*.war"
+        target: "/tmp/"
+
     - name: Trigger Jenkins Job
       run: |
-        curl -v -X POST "http://${{ secrets.JENKINS_HOST }}/job/${{ secrets.JENKINS_JOB }}/build" \
+        curl -v -X POST "http://${{ secrets.JENKINS_HOST }}:8081/job/${{ secrets.JENKINS_JOB }}/build" \
           --user "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }}"
